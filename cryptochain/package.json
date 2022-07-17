@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --watchAll",
-    "start": "npm run start-redis && nodemon index.js",
-    "start-redis": "redis-server --daemonize yes"
+    "start": "nodemon index.js",
+    "dev-peer": "cross-env GENERATE_PEER_PORT='true' nodemon index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,10 +17,11 @@
   },
   "dependencies": {
     "body-parser": "^1.20.0",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "hex-to-binary": "^1.0.1",
     "pubnub": "^7.2.0",
-    "redis": "^4.2.0"
+    "request": "^2.88.2"
   }
 }
