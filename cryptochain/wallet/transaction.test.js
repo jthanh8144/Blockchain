@@ -171,7 +171,7 @@ describe('Transaction', () => {
 
                 it('adds to the recipient amount', () => {
                     expect(transaction.outputMap[nextRecipient]).toEqual(
-                        nextAmount + addedAmount
+                        80
                     );
                 });
 
