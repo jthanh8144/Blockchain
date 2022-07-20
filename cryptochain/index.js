@@ -45,10 +45,18 @@ app.post('/api/transact', (req, res) => {
     });
     try {
         if (transaction) {
-            transaction = new Transaction({id: transaction.id, outputMap: transaction.outputMap, input: transaction.input})
+            transaction = new Transaction({
+                id: transaction.id,
+                outputMap: transaction.outputMap,
+                input: transaction.input,
+            });
             transaction.update({ senderWallet: wallet, recipient, amount });
         } else {
-            transaction = wallet.createTransaction({ recipient, amount });
+            transaction = wallet.createTransaction({
+                recipient,
+                amount,
+                chain: blockchain.chain,
+            });
         }
     } catch (err) {
         // console.log(err);
@@ -66,6 +74,16 @@ app.get('/api/transaction-pool-map', (req, res) => {
 app.get('/api/mine-transactions', (req, res) => {
     transactionMiner.mineTransactions();
     res.redirect('/api/blocks');
+});
+
+app.get('/api/wallet-info', (req, res) => {
+    res.json({
+        address: wallet.publicKey,
+        balance: Wallet.calculateBalance({
+            chain: blockchain.chain,
+            address: wallet.publicKey,
+        }),
+    });
 });
 
 const syncWithRootState = () => {
